@@ -1,14 +1,15 @@
-import xlrd
+""" importing data from Excel file """
+"""Module to drive data from json file"""
+import json
 
-class xl_data:
-
-    def read_locators(self,file_name,sheet_name):
-
-        with xlrd.open_workbook(file_name) as workbook:
-            worksheet=workbook.sheet_by_name(sheet_name)
-            rows=worksheet.get_rows()
-            next(rows)
-            Readline={row[0].value:(row[1].value,row[2].value) for row in rows}
-            return Readline,Readline.keys()
-
-
+class ReadJson:
+    """class to read locators from json"""
+    @staticmethod
+    def read_locators(filelocation):
+        """loading the data from json file"""
+        with open(filelocation) as file:
+            json_obj = json.load(file)
+            dict_ = {}
+            for key, value in json_obj.items():
+                dict_[key] = (value['locatorType'], value['locatorValue'])
+        return dict_
